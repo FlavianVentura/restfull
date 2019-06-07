@@ -1,37 +1,30 @@
-const http = require('http');
+const express = require('express');
 
-let server = http.createServer((req, res) => {
+let app = express();
 
-    console.log('OK', req.url);
-    console.log('METHOD', req.method);
+app.get('/',(req, res) => {
 
-    switch(req.url){
+    res.statusCode = 200;
+    res.setHeader('Content-type', 'text/html');
+    res.end('<h1>Olá Galera.</h1>')
 
-        case '/':
+});    
 
-        res.statusCode = 200;
-        res.setHeader('Content-type', 'text/html');
-        res.end('<h1>Olá Galera.</h1>')
-        break;
+app.get('/users', (req, res) => {
 
-        case '/users':
+    res.statusCode = 200;
+    res.setHeader('Content-type', 'application/json');
+    res.json({
 
-            res.statusCode = 200;
-            res.setHeader('Content-type', 'application/json');
-            res.end(JSON.stringify({
-
-                users: [{
-                    nome: 'flavian',
-                    email: 'flavian@ventura.com',
-                    id: 1
-                }]
-            }));
-        break;
-    }
-    
+        users: [{
+            nome: 'flavian',
+            email: 'flavian@ventura.com',
+            id: 1
+        }]
+    });
 });
 
-server.listen(3000, '127.0.0.1', () => {
+app.listen(3000, '127.0.0.1', () => {
 
     console.log('Servidor rodando.!');
     
